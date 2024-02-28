@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://cu43jrbvfk1tf"]
+
+[ext_resource type="Shader" uid="uid://b65nskynl4vck" path="res://Fireball/shaders/fireball_particles.tres" id="4_tl3eg"]
+
+[sub_resource type="Curve" id="Curve_8bhut"]
+_data = [Vector2(0.0269231, 1), 0.0, 0.586466, 0, 0, Vector2(0.553846, 0.810526), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ljf57"]
+curve = SubResource("Curve_8bhut")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6nelg"]
+direction = Vector3(0, 0, 0)
+spread = 2.0
+gravity = Vector3(0, 8, 0)
+damping_max = 9.86
+scale_min = 7.5
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_ljf57")
+turbulence_enabled = true
+turbulence_noise_strength = 4.0
+turbulence_noise_scale = 6.8
+turbulence_noise_speed = Vector3(0, 1, 0)
+attractor_interaction_enabled = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gy4fq"]
+render_priority = 0
+shader = ExtResource("4_tl3eg")
+
+[sub_resource type="QuadMesh" id="QuadMesh_uvss0"]
+material = SubResource("ShaderMaterial_gy4fq")
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_olpbm"]
+
+[node name="FireBall" type="Node3D"]
+
+[node name="ParticleSystems" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.187852, 0, 2.50344)
+
+[node name="Sparks" type="GPUParticles3D" parent="ParticleSystems"]
+transform = Transform3D(0.0496655, 0, 0, 0, 0.0496655, 0, 0, 0, 0.0496655, 0.190279, 0.0314443, -2.4695)
+transparency = 1.0
+cast_shadow = 0
+amount = 7
+lifetime = 0.4
+process_material = SubResource("ParticleProcessMaterial_6nelg")
+draw_pass_1 = SubResource("QuadMesh_uvss0")
+
+[node name="Flames" type="GPUParticles3D" parent="ParticleSystems"]
+transform = Transform3D(0.0502126, 0, 0, 0, 0.0502126, 0, 0, 0, 0.0502126, 0, 0, 0)
+visible = false
+transparency = 1.0
+process_material = SubResource("ParticleProcessMaterial_6nelg")
+draw_pass_1 = SubResource("QuadMesh_uvss0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.007056, 0, -0.05319)
+light_color = Color(1, 0.662745, 0.270588, 1)
+light_energy = 0.2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_olpbm")

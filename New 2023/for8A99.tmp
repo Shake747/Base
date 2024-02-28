@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://ck8r1ltkdpmwh"]
+
+[ext_resource type="Script" path="res://forest.gd" id="1_5rpnx"]
+[ext_resource type="PackedScene" uid="uid://brv7w4v4axvbd" path="res://Humanoid.tscn" id="1_27m4f"]
+[ext_resource type="PackedScene" uid="uid://cu43jrbvfk1tf" path="res://fireball_2.tscn" id="3_ixpbg"]
+[ext_resource type="Script" path="res://Terrain3D.gd" id="4_xkgtc"]
+[ext_resource type="Script" path="res://demo/src/RuntimeNavigationBaker.gd" id="5_82ikt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x3kay"]
+ground_bottom_color = Color(0.254902, 0.258824, 0.27451, 1)
+ground_horizon_color = Color(0.680392, 0.681373, 0.688235, 1)
+
+[sub_resource type="Sky" id="Sky_xyd46"]
+sky_material = SubResource("ProceduralSkyMaterial_x3kay")
+
+[sub_resource type="Environment" id="Environment_61eof"]
+background_mode = 2
+sky = SubResource("Sky_xyd46")
+ambient_light_color = Color(0.776471, 0.776471, 0.776471, 1)
+ambient_light_energy = 0.0
+tonemap_mode = 2
+tonemap_white = 6.0
+ssao_enabled = true
+ssil_radius = 1.69
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.12
+glow_strength = 0.8
+glow_bloom = 0.1
+glow_blend_mode = 0
+volumetric_fog_density = 0.0307
+adjustment_enabled = true
+adjustment_contrast = 2.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yd7ct"]
+frequency = 0.0033
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b4hes"]
+width = 2048
+height = 2048
+noise = SubResource("FastNoiseLite_yd7ct")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m2gsj"]
+frequency = 0.0036
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3k40e"]
+width = 2048
+height = 2048
+noise = SubResource("FastNoiseLite_m2gsj")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_v4ygu"]
+geometry_parsed_geometry_type = 1
+agent_height = 2.0
+agent_max_slope = 30.0
+
+[node name="Forest" type="Node3D"]
+script = ExtResource("1_5rpnx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_61eof")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.916342, 0.400397, 0, -0.400397, 0.916342, 0, 2.15114, 5.02029)
+light_energy = 0.4
+shadow_enabled = true
+directional_shadow_mode = 1
+
+[node name="Humanoid" parent="." instance=ExtResource("1_27m4f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 41.3177, 0)
+floor_constant_speed = true
+floor_max_angle = 1.22173
+floor_snap_length = 0.01
+safe_margin = 0.01
+_mouse_sensitivity = null
+jump_velocity = null
+air_movement_control = null
+movement_transition_value = null
+default_speed = null
+sprintspeed = 20
+
+[node name="FireBall" parent="Humanoid" instance=ExtResource("3_ixpbg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.298718, 1.00965, -0.221471)
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("4_xkgtc")
+noise1 = SubResource("NoiseTexture2D_b4hes")
+noise2 = SubResource("NoiseTexture2D_3k40e")
+
+[node name="RuntimeNavigationBaker" type="Node" parent="Node" node_paths=PackedStringArray("player")]
+script = ExtResource("5_82ikt")
+enabled = false
+template = SubResource("NavigationMesh_v4ygu")
+player = NodePath("../../Humanoid")

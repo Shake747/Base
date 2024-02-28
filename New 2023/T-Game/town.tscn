@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://7ywnerqnsp26"]
+
+[ext_resource type="PackedScene" uid="uid://d3mvf0x48ryd4" path="res://T-Game/town.glb" id="1_s3cti"]
+
+[node name="town" instance=ExtResource("1_s3cti")]
+
+[node name="Building1" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.13609, 0)
+
+[node name="Building2" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.13609, 0)
+
+[node name="Building3" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.13609, 0)

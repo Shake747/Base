@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://guxatmbig4ej"]
+
+[ext_resource type="Terrain3DStorage" uid="uid://bhyqgn3xrh46j" path="res://NewTerrain/new_storage.res" id="1_x8nd4"]
+[ext_resource type="Terrain3DMaterial" uid="uid://cisnmqr7th4wu" path="res://NewTerrain/terrain_3d_material.tres" id="2_fdidg"]
+[ext_resource type="Terrain3DTextureList" uid="uid://cuvrhe662nd0r" path="res://NewTerrain/texture_list.res" id="3_8vqhj"]
+
+[node name="Terrain2" type="Terrain3D"]
+storage = ExtResource("1_x8nd4")
+material = ExtResource("2_fdidg")
+texture_list = ExtResource("3_8vqhj")

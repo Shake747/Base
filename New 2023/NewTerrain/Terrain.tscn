@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://dp4hl5ayngijk"]
+
+[ext_resource type="Script" path="res://old_terrain/Terrain.gd" id="1_q2w27"]
+[ext_resource type="Texture2D" uid="uid://dbf1w8mqoq2jl" path="res://old_terrain/noise/Terrain1.tres" id="2_3rvbk"]
+[ext_resource type="Texture2D" uid="uid://un4vw7fbqxh6" path="res://old_terrain/noise/WhiteCenter.tres" id="3_nj27f"]
+[ext_resource type="Shader" uid="uid://cdkksii4qsy2h" path="res://old_terrain/Shader/TerrainShader.tres" id="4_esbfa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_55uxp"]
+render_priority = 0
+shader = ExtResource("4_esbfa")
+
+[node name="TerrainArea3D" type="StaticBody3D"]
+script = ExtResource("1_q2w27")
+mesh_generate = true
+texture = ExtResource("2_3rvbk")
+texture2 = ExtResource("3_nj27f")
+mesh_size = Vector2(2048, 2048)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_55uxp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]

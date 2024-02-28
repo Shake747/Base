@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4da0wcusn1cj"]
+
+[ext_resource type="Script" path="res://Characters/Rabbit/Rabbit Colony.gd" id="1_3hebt"]
+[ext_resource type="PackedScene" uid="uid://c22b831vdsm5f" path="res://Characters/Rabbit/rabbit.tscn" id="2_2jxdg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5o8tj"]
+
+[node name="Rabbit Colony" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transparency = 1.0
+mesh = SubResource("BoxMesh_5o8tj")
+script = ExtResource("1_3hebt")
+rabbit = ExtResource("2_2jxdg")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.994151, 0.107999, 0, -0.107999, 0.994151, 0.00096035, 1.24674, 5.27391)
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.203197, 0.979138, 0, -0.979138, 0.203197, 0, 1.16311, 0)
+visible = false

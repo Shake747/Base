@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://botvev4ind7e7"]
+
+[ext_resource type="Script" path="res://NewTerrain/Foliage/FoliageInstancer.gd" id="1_hsxne"]
+
+[node name="FoliageInstancer" type="Marker3D"]
+script = ExtResource("1_hsxne")
+instance_amount = 1000
+collider_coverage_dist = 100.0
+instance_spacing = 80

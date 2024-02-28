@@ -1,0 +1,160 @@
+[gd_scene load_steps=14 format=3 uid="uid://crd4klsq1ity6"]
+
+[ext_resource type="Script" path="res://NewTerrain/forest.gd" id="1_jrjsi"]
+[ext_resource type="PackedScene" uid="uid://cb8kwku7lu37o" path="res://Player/HumanoidVersion2.tscn" id="2_bjqmo"]
+[ext_resource type="Script" path="res://T-Game/respawn_and_teleport.gd" id="3_4b3vq"]
+[ext_resource type="PackedScene" uid="uid://7ywnerqnsp26" path="res://T-Game/town.tscn" id="3_olbas"]
+[ext_resource type="Script" path="res://T-Game/town.gd" id="4_k5aac"]
+[ext_resource type="Script" path="res://T-Game/SpawnLooper.gd" id="5_4kwsw"]
+[ext_resource type="PackedScene" uid="uid://dwtlc7k41a77p" path="res://NewTerrain/Foliage/shrub2.glb" id="7_1h8sy"]
+[ext_resource type="PackedScene" uid="uid://uxme0d70cg1d" path="res://NewTerrain/Foliage/tree1.glb" id="8_6dips"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_itoyi"]
+sky_top_color = Color(0.0980392, 0.12549, 0.160784, 1)
+sky_horizon_color = Color(0.141176, 0.145098, 0.152941, 1)
+sky_cover_modulate = Color(0.780392, 0.780392, 0.780392, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_wi3hu"]
+sky_material = SubResource("ProceduralSkyMaterial_itoyi")
+
+[sub_resource type="Environment" id="Environment_u8u7q"]
+background_mode = 2
+sky = SubResource("Sky_wi3hu")
+tonemap_mode = 2
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_density = 0.001
+fog_height = 0.1
+fog_height_density = 0.2222
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.811765, 0.811765, 0.811765, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mq53h"]
+size = Vector3(0.420837, 1, 0.281494)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwg4w"]
+size = Vector3(1, 50.309, 149.775)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_jrjsi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(0.345098, 0.545098, 0.960784, 1)
+light_energy = 0.0
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.5
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_u8u7q")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("2_bjqmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0033617, 0.272885, 48.7804)
+sprint_speed = 3.0
+
+[node name="Area3D" type="Area3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17092, 0)
+script = ExtResource("3_4b3vq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0191345, 0, 0.0474854)
+shape = SubResource("BoxShape3D_mq53h")
+
+[node name="town" parent="." instance=ExtResource("3_olbas")]
+transform = Transform3D(-0.163692, 0, -1.43104e-08, 0, 0.163692, 0, 1.43104e-08, 0, -0.163692, 0, 0, 0)
+script = ExtResource("4_k5aac")
+
+[node name="town2" parent="." instance=ExtResource("3_olbas")]
+transform = Transform3D(-0.163692, 0, -1.43104e-08, 0, 0.163692, 0, 1.43104e-08, 0, -0.163692, 154.489, 0, 0)
+script = ExtResource("4_k5aac")
+
+[node name="town3" parent="." instance=ExtResource("3_olbas")]
+transform = Transform3D(-0.163692, 0, -1.43104e-08, 0, 0.163692, 0, 1.43104e-08, 0, -0.163692, -154.531, 0, 0)
+script = ExtResource("4_k5aac")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.992928, 5.18924e-09, -0.118716, 0.118716, -4.34023e-08, 0.992928, 0, -1, -4.37114e-08, -7.77759, 14.0228, -28.5536)
+light_energy = 5.0
+light_negative = true
+shadow_enabled = true
+spot_range = 27.4984
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.0205935, 4.37021e-08, -0.999788, 0.999788, 9.00173e-10, -0.0205935, 1.63293e-15, -1, -4.37114e-08, -245.042, 9.08745, -41.9207)
+light_color = Color(0.764706, 0.0313726, 0, 1)
+light_energy = 16.0
+light_indirect_energy = 15.251
+light_volumetric_fog_energy = 11.131
+spot_range = 15.6657
+spot_angle = 70.3125
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(0.0205936, -4.37021e-08, 0.999788, -0.999788, -9.00177e-10, 0.0205936, 1.68843e-15, -1, -4.37114e-08, 217.962, 9.08745, -41.9207)
+light_color = Color(0.764706, 0.0313726, 0, 1)
+light_energy = 16.0
+light_indirect_energy = 15.251
+light_volumetric_fog_energy = 11.131
+spot_range = 15.6657
+spot_angle = 70.3125
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(0.989821, -2.53354e-09, 0.142318, -0.123251, 0.5, 0.85721, -0.0711589, -0.866025, 0.49491, -94.3459, 26.4296, -27.4693)
+light_energy = 16.0
+light_volumetric_fog_energy = 3.0
+spot_range = 27.4984
+
+[node name="LeftArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.9777, 0, -44.3345)
+script = ExtResource("5_4kwsw")
+
+[node name="LeftSide" type="CollisionShape3D" parent="LeftArea" groups=["LeftSide"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -151.25, 12.9819, 46.1674)
+shape = SubResource("BoxShape3D_wwg4w")
+
+[node name="RightArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.9777, 0, -44.3345)
+
+[node name="RightSide" type="CollisionShape3D" parent="RightArea" groups=["RightSide"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 309.753, 12.9819, 46.1674)
+shape = SubResource("BoxShape3D_wwg4w")
+
+[node name="LeftSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -207.779, 0, -43.4268)
+
+[node name="RightSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 194.922, 0, -41.5365)
+
+[node name="shrub2" parent="." instance=ExtResource("7_1h8sy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.64311, 10.1425, -2.04528, 34.3356)
+
+[node name="shrub3" parent="." instance=ExtResource("7_1h8sy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.64311, 10.1425, -2.04528, 45.5467)
+
+[node name="shrub4" parent="." instance=ExtResource("7_1h8sy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.64311, 10.1425, -2.04528, 28.2612)
+
+[node name="shrub5" parent="." instance=ExtResource("7_1h8sy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.64311, 10.1425, -2.04528, 57.9813)
+
+[node name="shrub6" parent="." instance=ExtResource("7_1h8sy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.64311, -13.7839, -2.04528, 34.3356)
+
+[node name="shrub7" parent="." instance=ExtResource("7_1h8sy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.64311, -13.7839, -2.04528, 45.5467)
+
+[node name="tree1" parent="." instance=ExtResource("8_6dips")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -136.494)
+
+[node name="tree3" parent="." instance=ExtResource("8_6dips")]
+transform = Transform3D(0.895898, 0, 0.44426, 0, 1, 0, -0.44426, 0, 0.895898, -269.737, 0, -136.494)
+
+[node name="tree2" parent="." instance=ExtResource("8_6dips")]
+transform = Transform3D(0.758248, 0, 0.651966, 0, 1, 0, -0.651966, 0, 0.758248, 227.195, 0, -115.357)
+
+[connection signal="area_entered" from="LeftArea" to="CharacterBody3D/Area3D" method="_on_left_area_area_entered"]
+[connection signal="area_entered" from="RightArea" to="CharacterBody3D/Area3D" method="_on_right_area_area_entered"]

@@ -1,0 +1,90 @@
+[gd_scene load_steps=14 format=3 uid="uid://ck8r1ltkdpmwh"]
+
+[ext_resource type="Script" path="res://forest.gd" id="1_5rpnx"]
+[ext_resource type="Script" path="res://NoiseGenerator.gd" id="4_cobba"]
+[ext_resource type="Texture2D" uid="uid://un4vw7fbqxh6" path="res://hterrain/noise/WhiteCenter.tres" id="4_womon"]
+[ext_resource type="Script" path="res://Terrain3D.gd" id="4_xkgtc"]
+[ext_resource type="Texture2D" uid="uid://dsdpltxlxdjf5" path="res://NewTerrain/Noise/Noise 1.tres" id="5_ep4bm"]
+[ext_resource type="Texture2D" uid="uid://c2b2gf66hq0om" path="res://NewTerrain/Noise/Noise 2.tres" id="6_fbewi"]
+[ext_resource type="PackedScene" uid="uid://cb8kwku7lu37o" path="res://HumanoidVersion2.tscn" id="7_dtkjo"]
+[ext_resource type="Texture2D" uid="uid://byxypkkl7l0st" path="res://NewTerrain/Noise/Noise 3.tres" id="7_n5t80"]
+[ext_resource type="PackedScene" uid="uid://botvev4ind7e7" path="res://FoliageInstancer.tscn" id="8_854sc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x3kay"]
+ground_bottom_color = Color(0.254902, 0.258824, 0.27451, 1)
+ground_horizon_color = Color(0.680392, 0.681373, 0.688235, 1)
+sun_angle_max = 110.0
+
+[sub_resource type="Sky" id="Sky_xyd46"]
+sky_material = SubResource("ProceduralSkyMaterial_x3kay")
+
+[sub_resource type="Environment" id="Environment_61eof"]
+background_mode = 2
+sky = SubResource("Sky_xyd46")
+ambient_light_source = 3
+ambient_light_color = Color(0.776471, 0.776471, 0.776471, 1)
+reflected_light_source = 2
+tonemap_mode = 3
+ssr_enabled = true
+ssao_enabled = true
+ssao_intensity = 16.0
+ssil_enabled = true
+ssil_radius = 1.69
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_cascades = 2
+sdfgi_min_cell_size = 0.8
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.12
+glow_bloom = 1.0
+fog_light_color = Color(0.670588, 0.694118, 0.647059, 1)
+fog_light_energy = 0.34
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_gi_inject = 0.35
+volumetric_fog_length = 80.0
+volumetric_fog_ambient_inject = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ldccw"]
+radius = 7.907
+height = 15.814
+
+[node name="Forest" type="Node3D"]
+script = ExtResource("1_5rpnx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_61eof")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.916342, 0.400397, 0, -0.400397, 0.916342, 0, 2.15114, 5.02029)
+light_energy = 0.4
+shadow_enabled = true
+directional_shadow_mode = 1
+
+[node name="Terrain" type="Node" parent="."]
+script = ExtResource("4_xkgtc")
+map_size_x = null
+map_size_y = null
+map_height_scale = null
+x_scale_pos = null
+z_scale_pos = null
+
+[node name="NoiseGenerator" type="Node" parent="Terrain"]
+script = ExtResource("4_cobba")
+noise1 = ExtResource("4_womon")
+noise2 = ExtResource("6_fbewi")
+noise3 = ExtResource("7_n5t80")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("7_dtkjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0454407, 53.108, -22.5983)
+sprint_speed = 10.0
+
+[node name="FoliageInstancer" parent="." node_paths=PackedStringArray("player_node") instance=ExtResource("8_854sc")]
+player_node = NodePath("../CharacterBody3D")
+generate_colliders = false
+collider_coverage_dist = 70.0
+terrain_height = 0.5
+heightmap = ExtResource("5_ep4bm")
+instance_collision = SubResource("CapsuleShape3D_ldccw")
+update_frequency = 0.5

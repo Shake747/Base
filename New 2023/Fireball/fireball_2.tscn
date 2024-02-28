@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bl1v6f01811cc"]
+
+[ext_resource type="PackedScene" uid="uid://eb4aw1d8pu40" path="res://Fireball2.glb" id="1_seb33"]
+[ext_resource type="Shader" uid="uid://dcxh51v5e8vik" path="res://Fireball2_visual_shader.tres" id="2_slb55"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eeb3o"]
+render_priority = 0
+shader = ExtResource("2_slb55")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xd52c"]
+render_priority = 0
+shader = ExtResource("2_slb55")
+
+[node name="Fireball2" instance=ExtResource("1_seb33")]
+
+[node name="InnerFire" parent="." index="0"]
+transform = Transform3D(1.19847, 0, 0, 0, 1.19847, 0, 0, 0, 1.08811, 0, 0, -0.555434)
+material_overlay = SubResource("ShaderMaterial_eeb3o")
+transparency = 1.0
+
+[node name="OuterFlame" parent="." index="1"]
+transform = Transform3D(1.00018, -0.00151237, 0, 0, 0, -1, 0.0013267, 1.14016, 0, 0, 0, -0.0588813)
+material_overlay = SubResource("ShaderMaterial_xd52c")
+transparency = 1.0

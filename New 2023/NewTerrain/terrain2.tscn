@@ -1,0 +1,23 @@
+[gd_scene load_steps=9 format=3 uid="uid://ccsjy1j15u526"]
+
+[ext_resource type="Terrain3DStorage" uid="uid://onlbm5pknajt" path="res://NewTerrain/terrain3dStorage-forterrain2.res" id="1_ujo1b"]
+[ext_resource type="Terrain3DMaterial" uid="uid://cisnmqr7th4wu" path="res://NewTerrain/terrain_3d_material.tres" id="2_iawqm"]
+[ext_resource type="Terrain3DTextureList" uid="uid://cuvrhe662nd0r" path="res://NewTerrain/texture_list.res" id="3_874eh"]
+[ext_resource type="Script" path="res://NewTerrain/Terrain2.gd" id="4_cqt7d"]
+[ext_resource type="Script" path="res://NewTerrain/NoiseGenerator.gd" id="5_rfl50"]
+[ext_resource type="Texture2D" uid="uid://un4vw7fbqxh6" path="res://old_terrain/noise/WhiteCenter.tres" id="6_1m6jj"]
+[ext_resource type="Texture2D" uid="uid://c2b2gf66hq0om" path="res://NewTerrain/Noise/Noise 2.tres" id="7_ixlnt"]
+[ext_resource type="Texture2D" uid="uid://byxypkkl7l0st" path="res://NewTerrain/Noise/Noise 3.tres" id="8_3mekw"]
+
+[node name="Terrain2" type="Terrain3D"]
+storage = ExtResource("1_ujo1b")
+material = ExtResource("2_iawqm")
+texture_list = ExtResource("3_874eh")
+mesh_size = 64
+script = ExtResource("4_cqt7d")
+
+[node name="NoiseGenerator" type="Node" parent="."]
+script = ExtResource("5_rfl50")
+noise1 = ExtResource("6_1m6jj")
+noise2 = ExtResource("7_ixlnt")
+noise3 = ExtResource("8_3mekw")
